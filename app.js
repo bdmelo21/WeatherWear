@@ -49,9 +49,10 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
 
+const index = require('./routes/index');
+app.use('/', index);
 
-
-const signup = require('./routes/index');
+/*const signup = require('./routes/signup');
 app.use('/', signup);
 
 const login = require('./routes/login');
@@ -67,7 +68,7 @@ const closet = require('./routes/closet');
 app.use('/', closet);
 
 const travel = require('./routes/travel');
-app.use('/', travel);
+app.use('/', travel);*/
 
 
 module.exports = app;
