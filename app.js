@@ -8,7 +8,11 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
+const helpers      = require('handlebars-helpers');
+const session      = require('express-session');
+const MongoStore   = require('connect-mongo') (session);
 
+hbs.registerHelper(helpers());
 
 mongoose
   .connect('mongodb://localhost/weatherwear', {useNewUrlParser: true})
@@ -37,6 +41,17 @@ app.use(require('node-sass-middleware')({
   dest: path.join(__dirname, 'public'),
   sourceMap: true
 }));
+
+app.use(
+  session({
+    secret: 'my secret',
+    cookie: { maxAge: 60000}, 
+    rolling: true, 
+    store: new MongoStore({ 
+      mongooseConnection: mongoose.connection
+    }) 
+  })
+)
       
 
 app.set('views', path.join(__dirname, 'views'));
@@ -47,7 +62,7 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 
 // default value for title local
-app.locals.title = 'Express - Generated with IronGenerator';
+app.locals.title = 'Weather Wear';
 
 
 
@@ -56,6 +71,9 @@ app.use('/', signup);
 
 const login = require('./routes/login');
 app.use('/', login);
+
+const logout = require('./routes/logout');
+app.use('/', logout);
 
 const dashboard = require('./routes/dashboard');
 app.use('/', dashboard);
