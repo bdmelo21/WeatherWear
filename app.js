@@ -66,12 +66,12 @@ app.locals.title = 'Weather Wear';
 
 
 
-const signup = require('./routes/index');
-app.use('/', signup);
+const index = require('./routes/index');
+app.use('/', index);
 
-const login = require('./routes/login');
-app.use('/', login);
-
+const auth = require('./routes/auth');
+app.use('/', auth);
+/*
 const logout = require('./routes/logout');
 app.use('/', logout);
 
@@ -85,7 +85,7 @@ const closet = require('./routes/closet');
 app.use('/', closet);
 
 const travel = require('./routes/travel');
-app.use('/', travel);
+app.use('/', travel);*/
 
 
 module.exports = app;
